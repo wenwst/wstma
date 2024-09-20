@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: wst-wx-api
+  profiles:
+    active: '@profile.active@'
+  messages:
+    encoding: UTF-8
+
+
+server:
+  port: '@api.wx.port@'
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    root:  INFO
+    org.springframework:  INFO
+    org.mybatis:  INFO
+token:
+  #redis默认过期时间（2小时）(这是自定义的)(毫秒)
+  expirationMilliSeconds: 7200000

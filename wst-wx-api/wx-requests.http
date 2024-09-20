@@ -1,0 +1,35 @@
+
+
+###
+POST http://localhost:8030/wx/auth/wxLogin?code=11111
+Content-Type: application/json
+
+
+> {% client.global.set("auth_token", response.body.content); %}
+
+
+###
+POST http://localhost:8030/wx/auth/wxLoginPhone
+Content-Type: application/json
+
+{
+  "code": "111111",
+  "encryptedData": "encryptedData",
+  "iv": "iviviviviv",
+  "phone": "18699999999"
+}
+
+### 绑定手机号码
+POST http://localhost:8030/wx/auth/wxBindMobile
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "mobile": "18699999999"
+}
+
+
+
+### 退出登陆
+POST http://localhost:@api.wx.port@/wx/auth/logout
+Content-Type: application/x-www-form-urlencoded

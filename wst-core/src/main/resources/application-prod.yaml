@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: wst-core
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wstma?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
+    username:  root
+    password:  fltd140303
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: 123456
+wx:
+  miniapp:
+    configs:
+      - appid: wxc8888888 #微信小程序的appid
+        secret: 999999999 #微信小程序的Secret
+        token: not_use_it #微信小程序消息服务器配置的token
+        aesKey: not_use_it #微信小程序消息服务器配置的EncodingAESKey
+        msgDataFormat: JSON
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+
+
