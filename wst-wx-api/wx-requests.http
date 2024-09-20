@@ -1,4 +1,5 @@
-
+POST http://localhost:8030/wx/auth/wxLogin
+Content-Type: application/json
 
 ###
 POST http://localhost:8030/wx/auth/wxLogin?code=11111

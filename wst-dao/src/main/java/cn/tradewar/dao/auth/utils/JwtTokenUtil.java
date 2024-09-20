@@ -46,7 +46,8 @@ public class JwtTokenUtil {
      */
     public static String generateToken(WstUserEntity user, Date expirationDate) {
         // 将 SALT 解码为字节数组
-        byte[] secretKey = Base64.getDecoder().decode(SALT);
+        String base64Salt = Base64.getEncoder().encodeToString(SALT.getBytes());
+        byte[] secretKey = Base64.getDecoder().decode(base64Salt);
 
         // 构建并返回 JWT token
         return Jwts.builder()

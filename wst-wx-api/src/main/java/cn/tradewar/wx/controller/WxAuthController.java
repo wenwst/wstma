@@ -1,6 +1,7 @@
 package cn.tradewar.wx.controller;
 
 import cn.tradewar.core.common.GenericResponse;
+import cn.tradewar.core.common.ServiceError;
 import cn.tradewar.core.consts.LogConst;
 import cn.tradewar.dao.model.bo.WxBindMobileBo;
 import cn.tradewar.dao.model.bo.WxLoginBo;
@@ -47,9 +48,20 @@ public class WxAuthController {
 	 * @return GenericResponse
 	 */
 	@PostMapping("wxLogin")
-	public GenericResponse login(String code)  {
+	public GenericResponse login(@RequestParam(required = false) String code)  {
 		log.info(LogConst.WX_BEGIN, "login", code);
-		return weChatService.wxLogin(code);
+		// 输入验证
+		if (code == null || code.isEmpty()) {
+			log.error("微信code不能为空");
+			return GenericResponse.response(ServiceError.ARG_ERROR);
+		}
+		try{
+			return weChatService.wxLogin(code);
+		} catch (Exception e) {
+			log.error(LogConst.WX_END_ERR, "login", e.getMessage());
+			return GenericResponse.response(ServiceError.UN_KNOW_ERROR);
+		}
+
 	}
 
 	/**

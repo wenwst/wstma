@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.PKCS7Encoder;
@@ -48,6 +49,7 @@ import java.util.*;
 @Service
 public class WeChatServiceImpl implements WeChatService{
 
+    @Setter
     @Value("${token.expirationMilliSeconds}")
     private Long expirationTime;
 
@@ -72,16 +74,16 @@ public class WeChatServiceImpl implements WeChatService{
     @Override
     public GenericResponse wxLogin(String code) {
 
-//        try {
-//            WxMaJscode2SessionResult sessionInfo = this.wxMaService.getUserService().getSessionInfo(code);
-//            if (sessionInfo == null || sessionInfo.getSessionKey() == null || sessionInfo.getOpenid() == null) {
-//                log.error(LogConst.WX_END_ERR, "wxLogin", code);
-//                return GenericResponse.response(ServiceError.WX_CODE_ERR);
-//            }
+        try {
+            WxMaJscode2SessionResult sessionInfo = this.wxMaService.getUserService().getSessionInfo(code);
+            if (sessionInfo == null || sessionInfo.getSessionKey() == null || sessionInfo.getOpenid() == null) {
+                log.error(LogConst.WX_END_ERR, "wxLogin", code);
+                return GenericResponse.response(ServiceError.WX_CODE_ERR);
+            }
 
-//            String sessionKey = sessionInfo.getSessionKey();
-//            String openId = sessionInfo.getOpenid();
-            String openId = "999999999";
+            String sessionKey = sessionInfo.getSessionKey();
+            String openId = sessionInfo.getOpenid();
+
 
             Optional<WstUserEntity> userOptional = wstUserService.getUserByWxOpenId(openId);
             WstUserEntity user = userOptional.orElseGet(() -> createNewUser(openId));
@@ -92,11 +94,10 @@ public class WeChatServiceImpl implements WeChatService{
 
             Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
             return generateTokenAndRespond(user, expirationDate);
-
-//        } catch (WxErrorException e) {
-//            log.error(LogConst.WX_END_ERR, "wxLogin", code, e);
-//            return GenericResponse.response(ServiceError.WX_CODE_ERR);
-//        }
+        } catch (WxErrorException e) {
+            log.error(LogConst.WX_END_ERR, "wxLogin", code, e);
+            return GenericResponse.response(ServiceError.UN_KNOW_ERROR);
+        }
     }
 
     private WstUserEntity createNewUser(String openId) {
