@@ -81,7 +81,7 @@ public class WeChatServiceImpl implements WeChatService{
                 return GenericResponse.response(ServiceError.WX_CODE_ERR);
             }
 
-            String sessionKey = sessionInfo.getSessionKey();
+//            String sessionKey = sessionInfo.getSessionKey();
             String openId = sessionInfo.getOpenid();
 
 

@@ -32,6 +32,7 @@ public class RedisUtil {
      * @param key 要查询的键
      * @return 符合条件的key的集合
      */
+    @SuppressWarnings("unused")
     public Set<String> keys(String key){
         return redisTemplate.keys(key);
     }
@@ -41,6 +42,7 @@ public class RedisUtil {
      * @param key 要查询的键
      * @return 对应的值
      */
+    @SuppressWarnings("unused")
     public Object get(String key){
         return redisTemplate.opsForValue().get(key);
     }
@@ -50,6 +52,7 @@ public class RedisUtil {
      * @param key 键
      * @param value 值
      */
+    @SuppressWarnings("unused")
     public void set(String key, String value){
         set(key, value, expirationMilliSeconds);
     }
@@ -68,6 +71,7 @@ public class RedisUtil {
      * 删除指定的key
      * @param key 要删除的键
      */
+    @SuppressWarnings("unused")
     public void delete(String key){
         redisTemplate.opsForValue().getOperations().delete(key);
     }
@@ -78,6 +82,7 @@ public class RedisUtil {
      * @param filed 哈希字段
      * @param domain 要存储的对象
      */
+    @SuppressWarnings("unused")
     public void hset(String key, String filed, Object domain){
         hset(key, filed, domain, expirationMilliSeconds);
     }
@@ -91,7 +96,7 @@ public class RedisUtil {
      */
     public void hset(String key, String filed, Object domain, long expire){
         redisTemplate.opsForHash().put(key, filed, domain);
-        setKeyExpire(key, expirationMilliSeconds);
+        setKeyExpire(key, expire);
     }
 
     /**
@@ -110,6 +115,7 @@ public class RedisUtil {
      * @param filed 哈希字段
      * @param domain 要存储的对象
      */
+    @SuppressWarnings("unused")
     public void hsetAbsent(String key, String filed, Object domain){
         redisTemplate.opsForHash().putIfAbsent(key, filed, domain);
     }
@@ -120,6 +126,7 @@ public class RedisUtil {
      * @param field 哈希字段
      * @return 对应的值
      */
+    @SuppressWarnings("unused")
     public Object hget(String key, String field) {
         return redisTemplate.opsForHash().get(key, field);
     }
@@ -157,6 +164,7 @@ public class RedisUtil {
      * @param key 键
      * @param set 要存储的Set集合
      */
+    @SuppressWarnings("unused")
     public void sset(String key, Set<?> set){
         sset(key, set, expirationMilliSeconds);
     }
@@ -167,6 +175,7 @@ public class RedisUtil {
      * @param field 哈希字段
      * @return 是否存在
      */
+    @SuppressWarnings("unused")
     public Boolean hasKey(String key, String field) {
         return redisTemplate.opsForHash().hasKey(key, field);
     }

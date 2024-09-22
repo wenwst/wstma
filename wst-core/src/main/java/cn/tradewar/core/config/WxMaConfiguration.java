@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
+import cn.tradewar.core.consts.LogConst;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -81,7 +82,7 @@ public class WxMaConfiguration{
 	};
 
 	private final WxMaMessageHandler logHandler = (wxMessage, context, service, sessionManager) -> {
-		log.info("收到消息：" + wxMessage.toString());
+        log.info("收到消息：{}", wxMessage.toString());
 		service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("收到信息为：" + wxMessage.toJson())
 				.toUser(wxMessage.getFromUser()).build());
 		return null;
@@ -105,7 +106,7 @@ public class WxMaConfiguration{
 							.toUser(wxMessage.getFromUser())
 							.build());
 		} catch (WxErrorException e) {
-			e.printStackTrace();
+			log.error(LogConst.EXCEPTION_FORMAT,"picHandler", e);
 		}
 
 		return null;
@@ -122,7 +123,7 @@ public class WxMaConfiguration{
 							.toUser(wxMessage.getFromUser())
 							.build());
 		} catch (WxErrorException e) {
-			e.printStackTrace();
+			log.error(LogConst.EXCEPTION_FORMAT,"qrcodeHandler", e);
 		}
 
 		return null;
