@@ -3,13 +3,12 @@ package cn.tradewar.wx.controller;
 import cn.tradewar.core.common.GenericResponse;
 import cn.tradewar.core.common.ServiceError;
 import cn.tradewar.core.consts.LogConst;
-import cn.tradewar.dao.model.bo.WxBindMobileBo;
 import cn.tradewar.dao.model.bo.WxLoginBo;
 import cn.tradewar.wx.service.WeChatService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -38,6 +37,10 @@ public class WxAuthController {
 	public GenericResponse wxLoginPhone(@Valid @RequestBody WxLoginBo wxLoginBo,
 										HttpServletRequest request) {
 		log.info(LogConst.WX_BEGIN, "wxLoginPhone", wxLoginBo);
+		if (StringUtils.isBlank(wxLoginBo.getPhone()) &&
+				(StringUtils.isBlank(wxLoginBo.getIv()) || StringUtils.isBlank(wxLoginBo.getEncryptedData()))) {
+			return GenericResponse.badArgument();
+		}
 		return weChatService.wxLoginPhone(wxLoginBo, request);
 	}
 
@@ -58,7 +61,7 @@ public class WxAuthController {
 		try{
 			return weChatService.wxLogin(code);
 		} catch (Exception e) {
-			log.error(LogConst.WX_END_ERR, "login", e.getMessage());
+			log.error(LogConst.WX_END_ERR, "login", code, e.getMessage());
 			return GenericResponse.response(ServiceError.UN_KNOW_ERROR);
 		}
 
@@ -71,16 +74,20 @@ public class WxAuthController {
 	 * @return GenericResponse
 	 */
 	@PostMapping("wxLogout")
-	public GenericResponse logout(@NotBlank @RequestParam Long userId) {
-		log.info("【请求开始】注销登录,请求参数，userId:{}", userId);
+	public GenericResponse logout(@RequestParam(required = false) Long userId) {
+		log.info(LogConst.WX_BEGIN, "logout", userId);
+		if (userId == null || userId <= 0) {
+			log.error(LogConst.WX_END_ERR, "logout", null, "userId不能为空");
+			return GenericResponse.response(ServiceError.ARG_ERROR);
+		}
 		return weChatService.wxLogout(userId);
 	}
 
 
-	@PostMapping("wxBindMobile")
-	public GenericResponse bindMobile(@Valid @RequestBody WxBindMobileBo bo) {
-		log.info(LogConst.WX_BEGIN, "bindMobile", bo);
-		return weChatService.wxBindMobile(bo);
-	}
+//	@PostMapping("wxBindMobile")
+//	public GenericResponse bindMobile(@Valid @RequestBody WxBindMobileBo bo) {
+//		log.info(LogConst.WX_BEGIN, "bindMobile", bo);
+//		return weChatService.wxBindMobile(bo);
+//	}
 }
 

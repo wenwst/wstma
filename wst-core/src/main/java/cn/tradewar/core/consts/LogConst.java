@@ -9,6 +9,6 @@ public interface LogConst{
 
 	String WX_BEGIN = "[请求开始]->{}, 参数: {}";
 
-	String WX_END_ERR = "[请求结束]->{}, 参数: {}";
+	String WX_END_ERR = "[请求结束]->{}, 参数: {}, 错误信息: {}";
 
 }

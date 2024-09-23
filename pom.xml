@@ -302,6 +302,18 @@
             <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- 添加测试组件 -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.29.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>7.5.1</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Maven 仓库配置 -->

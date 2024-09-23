@@ -227,7 +227,6 @@ public class WeChatServiceImpl implements WeChatService{
         userInfo.setRegisterDate(user.getCreateTime()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         userInfo.setStatus(user.getStatus());
-        userInfo.setPhone(user.getMobile());
         userInfo.setAvatarUrl(user.getAvatar());
         userInfo.setNickName(user.getNickname());
         result.put("userInfo", userInfo);
@@ -274,7 +273,7 @@ public class WeChatServiceImpl implements WeChatService{
         newUser.setUsername(openId);
         newUser.setPassword(openId);
         newUser.setAvatar("defaultAvatar.png");
-        newUser.setNickname("立度用户");
+        newUser.setNickname("WSTMA");
         newUser.setGender((byte) 1);
         newUser.setMobile(mobile);
         newUser.setUserLevel((byte) 0);
