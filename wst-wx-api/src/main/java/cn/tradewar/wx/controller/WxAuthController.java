@@ -82,12 +82,5 @@ public class WxAuthController {
 		}
 		return weChatService.wxLogout(userId);
 	}
-
-
-//	@PostMapping("wxBindMobile")
-//	public GenericResponse bindMobile(@Valid @RequestBody WxBindMobileBo bo) {
-//		log.info(LogConst.WX_BEGIN, "bindMobile", bo);
-//		return weChatService.wxBindMobile(bo);
-//	}
 }
 

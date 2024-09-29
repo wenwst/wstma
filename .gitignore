@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-.logs/
+logs/
 wst-core/src/main/resources/application-dev.yaml
+/wst-wx-api/logs/
